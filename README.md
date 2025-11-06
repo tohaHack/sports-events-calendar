@@ -45,8 +45,8 @@ sportradar_calendar/
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/tohaHack/sports-events-calendar
-cd sportradar_task
+git clone https://github.com/tohaHack/sports-events-calendar.git
+cd sportradar
 ```
 
 2. Create and activate a virtual environment:
