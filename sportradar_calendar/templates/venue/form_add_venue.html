@@ -1,0 +1,14 @@
+{% extends "general/base.html" %}
+{% from "general/forms.html" import entity_form %}
+
+{% block title %}Add Venue{% endblock %}
+
+{% block content %}
+  <h1 class="text-center mb-4">Add New Venue</h1>
+
+  {{ entity_form(
+    action_url='/venue', 
+    columns=columns, 
+    submit_text='Add venue') 
+  }}
+{% endblock %}
