@@ -1,0 +1,90 @@
+{% extends "general/base.html" %}
+{% block title %}Index{% endblock %}
+
+{% block content %}
+{% endblock %}
+
+{% macro entity_table(items, columns, id_field, title='Items',
+                      delete_endpoint='/entity/delete', add_url=None,
+                      lookups=None, header_labels=None) -%}
+  {% set lookups = lookups or {} %}
+  {% set header_labels = header_labels or {} %}
+
+  <div class="table-toolbar d-flex align-items-center mb-3">
+    <h1 class="h3 mb-0">{{ title }}</h1>
+    {% if add_url %}
+      <a class="btn btn-primary btn-sm ml-auto" href="{{ add_url }}">Add</a>
+    {% endif %}
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover align-middle table-sm custom-table">
+      <thead class="thead-sticky bg-white">
+        <tr>
+          {% for col in columns %}
+            {% set key = col['name'] %}
+            <th scope="col">{{ header_labels.get(key, key) }}</th>
+          {% endfor %}
+          <th class="actions-col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for it in items %}
+        <tr data-id="{{ it[id_field] }}">
+          {% for col in columns %}
+
+            {% set key = col['name'] %}
+            {% if key == 'event_date' and ('event_date_fmt' in it) %}
+              <td>{{ it['event_date_fmt'] }}</td>
+            {% elif lookups.get(key) %}
+              <td>{{ lookups[key].get(it[key], it[key]) }}</td>
+            {% else %}
+              <td>{{ it[key] }}</td>
+            {% endif %}
+
+          {% endfor %}
+          <td class="text-right">
+            <button type="button"
+                    class="btn btn-outline-danger btn-sm row-delete"
+                    data-id="{{ it[id_field] }}"
+                    data-endpoint="{{ delete_endpoint }}"
+                    onclick="genericDelete(this)">
+              Delete
+            </button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{%- endmacro %}
+
+
+
+
+{% block scripts %}
+<script>
+async function genericDelete(btn){
+  const id = btn.dataset.id;
+  const endpoint = btn.dataset.endpoint;
+  if (!id || !endpoint) return;
+
+  if (!confirm('Delete item #' + id + '?')) return;
+
+  try {
+    const resp = await fetch(`${endpoint}/${id}`, {
+      method: 'DELETE',
+      headers: { 'X-Requested-With': 'fetch' }
+    });
+    if (!resp.ok) {
+      const text = await resp.text();
+      throw new Error(text || ('HTTP ' + resp.status));
+    }
+    const tr = btn.closest('tr');
+    if (tr) tr.remove();
+  } catch (err) {
+    alert('Failed to delete: ' + err.message);
+  }
+}
+</script>
+{% endblock %}

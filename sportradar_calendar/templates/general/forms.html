@@ -1,0 +1,47 @@
+{# templates/general/forms.html #}
+{% extends "general/base.html" %}
+{% macro entity_form(action_url, columns, submit_text='Save', method='POST',
+                                 skip_pk=true, skip_defaults=true) -%}
+  <form method="{{ method }}" action="">
+    {% for col in columns
+          if not (skip_pk and col['pk'] == 1)
+          and not (skip_defaults and col['name'] in ['created_at', 'updated_at', 'rowid']) %}
+
+      {# Проста мапа SQL->HTML типів #}
+      {% set html_type = 'text' %}
+      {% if col['type'] %}
+        {% set t = col['type']|upper %}
+        {% if t.startswith('INT') or t.startswith('REAL') or t.startswith('NUM')
+              or t in ['INTEGER','BIGINT','SMALLINT','DECIMAL','FLOAT','DOUBLE'] %}
+          {% set html_type = 'number' %}
+        {% elif t.startswith('DATE') or t == 'DATETIME' %}
+          {% set html_type = 'date' %}
+        {% elif t in ['TEXT','VARCHAR','CHAR'] %}
+          {% set html_type = 'text' %}
+        {% endif %}
+      {% endif %}
+
+      <div class="form-group">
+        <label class="form-label" for="{{ col['name'] }}">{{ col['name']|replace('_',' ')|title }}</label>
+        <input
+          type="{{ html_type }}"
+          class="form-control mb-3"
+          id="{{ col['name'] }}"
+          name="{{ col['name'] }}"
+          placeholder=""
+          {% if col['dflt_value'] is not none %} value="{{ col['dflt_value'] }}"{% endif %}
+          {% if col['notnull'] %} required{% endif %}
+        />
+      </div>
+    {% endfor %}
+    <div class="form-actions d-flex align-items-center mt-2">
+      <button type="submit" class="btn btn-primary mr-2">{{ submit_text }}</button>
+
+      <div class="ml-auto">
+        {% if action_url %}
+          <a class="btn btn-outline-primary" href="{{ action_url }}">View Table</a>
+        {% endif %}
+      </div>
+    </div>
+  </form>
+{%- endmacro %}
