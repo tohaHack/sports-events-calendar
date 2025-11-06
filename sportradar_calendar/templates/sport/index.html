@@ -1,0 +1,15 @@
+{% extends "general/base_index.html" %}
+{% from "general/base_index.html" import entity_table %}
+
+{% block title %}Sports{% endblock %}
+
+{% block content %}
+  {{ entity_table(
+      items=items,
+      columns=columns,
+      id_field=id_field,
+      title='Sport',
+      delete_endpoint='/sport/delete',
+      add_url='/sport/add'
+  ) }}
+{% endblock %}

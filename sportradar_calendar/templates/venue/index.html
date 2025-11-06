@@ -1,0 +1,15 @@
+{% extends "general/base_index.html" %}
+{% from "general/base_index.html" import entity_table %}
+
+{% block title %}Venue{% endblock %}
+
+{% block content %}
+  {{ entity_table(
+      items=items,
+      columns=columns,
+      id_field=id_field,
+      title='Venue',
+      delete_endpoint='/venue/delete',
+      add_url='/venue/add'
+  ) }}
+{% endblock %}

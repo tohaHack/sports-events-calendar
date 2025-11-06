@@ -1,0 +1,89 @@
+{% extends "general/base.html" %}
+
+{% block title %}Add Sport{% endblock %}
+
+{% block content %}
+  <h1 class="text-center mb-4">Add New Event</h1>
+  <form method="POST" action="">
+    <div class="form-group">
+      <label for="sport_id">Sport</label>
+      <select id="_sport_id" name="_sport_id" class="form-control mb-3" required>
+        <option value="" selected disabled hidden>Select sport</option>
+        {% for s in sports %}
+          <option value="{{ s['sport_id'] }}">{{ s['name'] }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="home_team_id">Home team</label>
+      <select id="_home_team_id" name="_home_team_id" class="form-control mb-3" required>
+        <option value="" selected disabled hidden>Select home team</option>
+        {% for t in teams %}
+          <option value="{{ t['team_id'] }}">{{ t['name'] }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="away_team_id">Away team</label>
+      <select id="_away_team_id" name="_away_team_id" class="form-control mb-3" required>
+        <option value="" selected disabled hidden>Select away team</option>
+        {% for t in teams %}
+          <option value="{{ t['team_id'] }}">{{ t['name'] }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="venue_id">Venue</label>
+      <select id="_venue_id" name="_venue_id" class="form-control mb-3" required>
+        <option value="" selected disabled hidden>Select venue</option>
+        {% for v in venues %}
+          <option value="{{ v['venue_id'] }}">{{ v['name'] }} — {{ v['city'] }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="event_date">Event date</label>
+      <input type="datetime-local" id="event_date" name="event_date" class="form-control mb-3" required>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input type="text" id="description" name="description" class="form-control mb-3" placeholder="Optional short note">
+    </div>
+
+    <div class="form-actions d-flex align-items-center mt-2">
+      <button type="submit" class="btn btn-primary mr-2">Add event</button>
+      <div class="ml-auto">
+        <a class="btn btn-outline-primary" href="{{ url_for('event') }}">View Table</a>
+      </div>
+    </div>
+  </form>
+  <script>
+    (function(){
+      const home = document.getElementById('_home_team_id');
+      const away = document.getElementById('_away_team_id');
+      const form = home.closest('form');
+
+      form.addEventListener('submit', function(e){
+        if (home.value && away.value && home.value === away.value) {
+          e.preventDefault();
+          alert('Home and away teams must be different.');
+        }
+      });
+    })();
+    (function(){
+      const dt = document.getElementById('event_date');
+      if (dt && !dt.value) {
+        const d = new Date(Date.now() + 60*60*1000);
+        d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+        dt.value = d.toISOString().slice(0,16); // YYYY-MM-DDTHH:MM
+      }
+    })();
+  </script>
+
+{% endblock %}
+

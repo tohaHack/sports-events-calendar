@@ -1,0 +1,49 @@
+{% extends "general/base_index.html" %}
+{% from "general/base_index.html" import entity_table %}
+
+{% block title %}Event{% endblock %}
+
+{% block content %}
+
+  <div class="btn-toolbar mb-3 d-flex align-items-center">
+    <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Navigate tables">
+      <a class="btn btn-outline-secondary" href="{{ url_for('sport') }}">Sports</a>
+      <a class="btn btn-outline-secondary" href="{{ url_for('team') }}">Teams</a>
+      <a class="btn btn-outline-secondary" href="{{ url_for('venue') }}">Venues</a>
+    </div>
+  </div>
+
+  <form method="get" class="form-inline mb-3">
+  <label class="mr-2" for="sport_id">Sport</label>
+  <select name="sport_id" id="sport_id" class="form-control mr-3">
+    <option value="">All</option>
+    {% for s in sports %}
+      <option value="{{ s['sport_id'] }}" {% if selected_sport==s['sport_id'] %}selected{% endif %}>
+        {{ s['name'] }}
+      </option>
+    {% endfor %}
+  </select>
+
+  <label class="mr-2" for="date_from">From</label>
+  <input type="date" name="date_from" id="date_from" class="form-control mr-3"
+         value="{{ date_from }}">
+
+  <label class="mr-2" for="date_to">To</label>
+  <input type="date" name="date_to" id="date_to" class="form-control mr-3"
+         value="{{ date_to }}">
+
+  <button type="submit" class="btn btn-primary mr-2">Apply</button>
+  <a class="btn btn-outline-secondary" href="{{ url_for('event') }}">Clear</a>
+</form>
+
+  {{ entity_table(
+      items=items,
+      columns=columns,
+      id_field=id_field,
+      title='Event',
+      delete_endpoint='/delete',
+      add_url='/add',
+      lookups=lookups,
+      header_labels=header_labels
+  ) }}
+{% endblock %}
