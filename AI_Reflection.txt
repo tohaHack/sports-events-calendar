@@ -1,0 +1,71 @@
+AI Reflection
+
+This document is an honest and transparent reflection on the use of artificial intelligence tools while completing this take-home assignment.
+
+1) Brief introduction
+
+I used available AI tools (for example, ChatGPT and GitHub Copilot) as supportive resources during development of this project. The purpose of using AI was to speed up repetitive tasks, get ideas for code structure, and receive suggestions for patterns and small code snippets. I retained full ownership of architectural decisions, core logic, and tests.
+
+2) Parts of the solution written by me
+
+- Architectural decisions and module layout (packages such as `event`, `sport`, `team`, `venue`, templates and service structure).
+- Core business logic implemented in the `*_services.py` files.
+- HTTP routes and template wiring in each module's `routes.py`.
+- Database schema (`schema.sql`) and its integration via `db.py`.
+- Test setup and most unit tests under each module's `test/` folder (happy-paths and basic validation tests).
+- Manual testing (local runs, verifying form and route behavior) and review of changes before each commit.
+
+Clarification about my contributions:
+
+Specifically, I implemented the backend pieces myself: the service modules, the HTTP routes, and the main server logic. I wrote the majority of the core application code and business logic; AI was used as a support tool rather than an author of those backend parts.
+
+3) Parts generated or influenced by AI, and how I evaluated them
+
+- Template code snippets and examples: occasionally I asked AI for syntactic templates or small helper implementations (e.g., field validators, example SQL snippets, or sample unit-test patterns). These were used strictly as starting points.
+
+- Test-case suggestions: AI sometimes helped identify edge cases and proposed assert statements for unit tests.
+
+Additional details about frontend and debugging assistance:
+
+The frontend portion (templates and some form-handling templates) was more heavily influenced by AI suggestions and generated snippets. For example, I used prompts such as:
+
+"Now we need to add add and delete functionality for teams and venues. I think it would be better to do this in the form of a single form and a single template, or however it's best to do it."
+
+I also used AI to help debug runtime errors by sending full error traces and asking for explanations and fixes. An example of the kind of error I shared was a Jinja/Flask template error (TypeError: macro 'delete_button' takes no keyword argument 'hidden_fields'). The model explained why the error occurred (a mismatch between macro parameters and provided keyword arguments in the template) and suggested concrete fixes (adjust the macro signature or omit/rename the keyword argument where it is used). These explanations helped me find and apply the correct changes faster.
+
+How I validated AI-generated content:
+- Manual review: I read and reviewed every AI-suggested fragment to ensure it matched the project's business logic and code style.
+- Running tests: where suggested code touched logic, I ran existing unit tests (and added tests when needed) to ensure no regressions.
+- Local interactive checks: I ran the application locally and exercised the routes and forms that used AI-provided code.
+- Security and correctness checks: I reviewed for obvious issues such as potential SQL injection, error handling gaps, and boundary conditions.
+
+AI suggestions were only integrated after I fully understood them and after local validation.
+
+Overall, AI assistance filled gaps in my knowledge (especially around template structure and debugging unfamiliar errors), while the core backend and application design remained my own work. I'm glad I finished the project and reached the result I intended.
+
+4) Why I made certain technical decisions
+
+- Simplicity and clarity: I chose a simple, modular architecture (services / routes / templates) to make the project easy to read and reason about during review.
+- Lightweight database setup: the project favors a file-based SQLite configuration for portability and ease of local testing—sufficient for a demonstration assignment.
+- Tests-first mindset: I prioritized a small set of unit tests covering critical paths to catch regressions early.
+- Separation of concerns: services contain business logic, routes handle HTTP, and templates handle presentation to simplify future maintenance.
+
+5) One improvement I would make with more time
+
+If I had additional time I would prioritize:
+- Integration tests and CI: add integration tests and a CI pipeline (e.g., GitHub Actions) to run tests and linters automatically on PRs.
+- Improved validation and error handling: centralize error handling and provide clearer user-facing validation messages.
+- Expanded test coverage and performance improvements: add more negative-case tests and consider caching for frequently used queries.
+
+6) Honor code and authorship confirmation
+
+By submitting this assignment I confirm that:
+- The work reflects my understanding of the solution and that I personally reviewed and validated the final code.
+- The solution was not implemented by another person outside of reasonable AI assistance.
+- Any use of AI tools has been documented honestly in this reflection.
+
+7) Short summary
+
+I used AI as a support tool to generate ideas and small example fragments. All AI content was carefully reviewed and only integrated after I verified its correctness. Core design and business logic are my own work.
+
+If desired, I can provide a file-level list of fragments that were influenced or generated by AI, with brief notes on how each piece was evaluated and integrated.

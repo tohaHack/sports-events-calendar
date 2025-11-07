@@ -1,0 +1,129 @@
+/* Таблиці */
+.table-hover tbody tr:hover {
+  background-color: #f6f7f9;
+}
+
+/* Кнопка Delete показується лише під час hover на рядку */
+.row-delete {
+  transition: opacity .12s ease-in-out;
+}
+tbody tr .row-delete {
+  opacity: 0;
+  pointer-events: none;
+}
+tbody tr:hover .row-delete {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Дрібні утиліти */
+.text-right {
+  text-align: right;
+}
+
+/* Краще вирівнювання кнопок форми */
+.form-actions {
+  gap: 0.5rem;               /* невеликий проміжок між кнопками */
+}
+
+.btn-primary {
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.btn-outline-primary {
+  border-width: 2px;
+}
+
+/* Узгоджений вигляд інпутів */
+.form-control {
+  border-radius: 0.35rem;
+}
+
+/* Відступи між групами */
+.form-group + .form-group {
+  margin-top: 0.75rem;
+}
+
+
+/* Toolbar над таблицею */
+.table-toolbar .h3 {
+  font-weight: 600;
+}
+.table-toolbar .btn {
+  min-width: 72px;
+}
+
+/* Липкий заголовок */
+.thead-sticky th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #fff;
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.06);
+}
+
+/* Компактніша таблиця */
+.custom-table td, .custom-table th {
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.custom-table tbody td {
+  white-space: normal;           /* дані можуть переноситись */
+}
+
+/* Колонка дій вузька і вирівняна */
+.actions-col {
+  width: 110px;
+}
+.row-delete {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .12s ease-in-out;
+}
+.custom-table tbody tr:hover .row-delete {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Відступи сторінки */
+.table-responsive {
+  border-radius: .25rem;
+}
+
+/* Заголовок сторінки */
+h1.h3 {
+  letter-spacing: .2px;
+}
+
+/* Toolbar над таблицею */
+.btn-toolbar .btn {
+  min-width: 88px;
+}
+.btn-toolbar .btn-outline-secondary {
+  border-width: 2px;
+}
+
+/* Навбар: вирівнювання та відступи для кнопки Back */
+.navbar .back-btn {
+  min-width: 72px;
+  font-weight: 500;
+  padding: .25rem .6rem;
+  border-width: 2px;
+  border-radius: .35rem;
+  line-height: 1.2;
+}
+
+/* Делікатна тінь та ховер */
+.navbar .back-btn {
+  box-shadow: 0 1px 3px rgba(0,0,0,.06);
+}
+.navbar .back-btn:hover {
+  background-color: #545454;
+}
+
+/* На малих екранах додай трохи відступу від бренду */
+@media (max-width: 576px) {
+  .navbar .back-btn { margin-left: .5rem; }
+}
+
+
